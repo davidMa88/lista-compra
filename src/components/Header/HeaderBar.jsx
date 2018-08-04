@@ -1,6 +1,12 @@
 import React from "react";
-import { Divider } from "semantic-ui-react";
 
-const HeaderBar = () => <Divider />;
+const HeaderBar = () => {
+  return <div />;
+};
 
 export default HeaderBar;
+
+// export const ChildComponent = ( props ) =>
+// <div className={ `some-css-className ${ props.className }` }>
+//   { props.children }
+// </div>
