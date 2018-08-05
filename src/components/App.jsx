@@ -1,20 +1,24 @@
 import React, { Component } from "react";
 import Header from "./Header/Header";
 import BodyApp from "./Body/BodyApp";
-import { AppContext } from "./Header/Menu";
 
 class App extends Component {
-  state = {
-    active: "true"
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      sidebar: false
+    };
+  }
+
+  enableSidebar(sidebarToggle) {
+    this.setState({ sidebar: sidebarToggle });
+  }
 
   render() {
     return (
       <React.Fragment>
-        <Header />
-        <AppContext.Provider>
-          <BodyApp />
-        </AppContext.Provider>
+        <Header sidebar={this.enableSidebar.bind(this)} />
+        <BodyApp sidebarToggle={this.state.sidebar} />
       </React.Fragment>
     );
   }

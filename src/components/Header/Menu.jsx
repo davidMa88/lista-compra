@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
 
-export const AppContext = React.createContext({
-  active: "false"
-});
-
 class Menu extends Component {
-  state = { visible: false };
+  state = {
+    sidebar: false
+  };
 
-  handleButtonClick = () => this.setState({ visible: !this.state.visible });
-  handleSidebarHide = () => this.setState({ visible: false });
+  toggleSidebar = () => {
+    this.props.sidebar(this.state.sidebar);
+    this.state.sidebar = !this.state.sidebar;
+  };
 
   render() {
     return (
@@ -17,7 +17,7 @@ class Menu extends Component {
         <Button
           icon="align justify"
           style={{ fontSize: "2em" }}
-          onClick={this.handleButtonClick}
+          onClick={this.toggleSidebar}
         />
       </div>
     );
