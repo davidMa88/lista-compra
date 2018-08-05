@@ -1,18 +1,23 @@
 import React, { Component } from "react";
+import { Button } from "semantic-ui-react";
+
+export const AppContext = React.createContext({
+  active: "false"
+});
 
 class Menu extends Component {
-  state = {};
-  render() {
-    const _style = {
-      fontSize: "2em"
-    };
+  state = { visible: false };
 
+  handleButtonClick = () => this.setState({ visible: !this.state.visible });
+  handleSidebarHide = () => this.setState({ visible: false });
+
+  render() {
     return (
-      <div className="col-xs-1 p-2">
-        <span
-          className="glyphicon glyphicon-align-justify "
-          style={_style}
-          aria-hidden="true"
+      <div className="right floated four wide column">
+        <Button
+          icon="align justify"
+          style={{ fontSize: "2em" }}
+          onClick={this.handleButtonClick}
         />
       </div>
     );

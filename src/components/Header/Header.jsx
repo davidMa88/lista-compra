@@ -7,7 +7,7 @@ class Header extends Component {
   state = {};
   render() {
     return (
-      <div className="container p-2 bg-light">
+      <div className="ui one column grid">
         <Title />
         <Menu />
       </div>
@@ -16,14 +16,3 @@ class Header extends Component {
 }
 
 export default Header;
-
-// <div className="parent-component">
-//     <ChildComponent className="parent-component__child">
-//       ...
-//     </ChildComponent>
-//   </div>
-
-// export const ChildComponent = ( props ) =>
-// <div className={ `some-css-className ${ props.className }` }>
-//   { props.children }
-// </div>
