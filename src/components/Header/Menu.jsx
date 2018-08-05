@@ -7,8 +7,8 @@ class Menu extends Component {
   };
 
   toggleSidebar = () => {
-    this.props.sidebar(this.state.sidebar);
     this.state.sidebar = !this.state.sidebar;
+    this.props.sidebar(this.state.sidebar);
   };
 
   render() {

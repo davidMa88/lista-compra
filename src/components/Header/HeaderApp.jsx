@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import Title from "./Title";
 import Menu from "./Menu";
-// import {HeaderBar} from "./HeaderBar";
 
-class Header extends Component {
+class HeaderApp extends Component {
   render() {
     return (
       <div className="ui one column grid">
@@ -14,4 +13,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default HeaderApp;

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Header from "./Header/Header";
 import BodyApp from "./Body/BodyApp";
+import HeaderApp from "./Header/HeaderApp";
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <Header sidebar={this.enableSidebar.bind(this)} />
+        <HeaderApp sidebar={this.enableSidebar.bind(this)} />
         <BodyApp sidebarToggle={this.state.sidebar} />
       </React.Fragment>
     );
