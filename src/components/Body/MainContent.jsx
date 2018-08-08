@@ -14,7 +14,7 @@ class MainContent extends Component {
   constructor(props, context) {
     super(props, context);
     this._columns = [
-      { key: "id", name: "Id" },
+      { key: "id", name: "Id", width: 80 },
       { key: "name", name: "Nombre" },
       { key: "count", name: "Cantidad", editable: true },
       { key: "priority", name: "Prioridad", editable: true }
@@ -76,6 +76,7 @@ class MainContent extends Component {
           />
           <Divider />
           <ReactDataGrid
+            enableCellSelect={true}
             columns={this._columns}
             rowGetter={this.rowGetter}
             rowsCount={this.state.rows.length}
