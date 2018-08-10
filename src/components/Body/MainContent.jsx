@@ -14,14 +14,14 @@ class MainContent extends Component {
   constructor(props, context) {
     super(props, context);
     this._columns = [
-      { key: "id", name: "Id", width: 80 },
-      { key: "name", name: "Nombre" },
-      { key: "count", name: "Cantidad", editable: true },
-      { key: "priority", name: "Prioridad", editable: true }
+      { key: "id", name: "Id", width: 80, sortable: true },
+      { key: "name", name: "Nombre", editable: true, sortable: true },
+      { key: "count", name: "Cantidad", editable: true, sortable: true },
+      { key: "priority", name: "Prioridad", editable: true, sortable: true }
     ];
     this.state = {
       articleToAdd: "",
-      articles: [],
+      selectedRow: [],
       rows: []
     };
   }
@@ -42,28 +42,59 @@ class MainContent extends Component {
     this.setState({ rows });
   };
 
-  addArticle = () => {
-    var newarticle = {
-      id: this.state.rows.length,
-      name: this.state.articleToAdd,
-      count: 1,
-      priority: 5
+  handleGridSort = (sortColumn, sortDirection) => {
+    const comparer = (a, b) => {
+      if (sortDirection === "ASC") {
+        return a[sortColumn] > b[sortColumn] ? 1 : -1;
+      } else {
+        return a[sortColumn] < b[sortColumn] ? 1 : -1;
+      }
     };
 
-    var newarticles = this.state.articles.slice();
-    newarticles.push(newarticle);
-
-    this.setState({
-      articles: newarticles
-    });
-
-    this.state.rows.push(newarticle);
+    const rows = this.state.rows.sort(comparer);
+    this.setState({ rows });
   };
+
+  handleRowClick = index => {
+    const selectedRow = this.rowGetter(index);
+    this.setState({ selectedRow });
+  };
+
+  // onRowsSelected = rows => {
+  //   this.setState({
+  //     selectedIndexes: this.state.selectedIndexes.concat(
+  //       rows.map(r => r.rowIdx)
+  //     )
+  //   });
+  // };
+
+  // onRowsDeselected = rows => {
+  //   let rowIndexes = rows.map(r => r.rowIdx);
+  //   this.setState({
+  //     selectedIndexes: this.state.selectedIndexes.filter(
+  //       i => rowIndexes.indexOf(i) === -1
+  //     )
+  //   });
+  // };
 
   onChange = e =>
     this.setState({
       articleToAdd: e.target.value
     });
+
+  addArticle = () => {
+    var newarticle = {
+      id: this.state.rows.length,
+      name: this.state.articleToAdd,
+      count: "1",
+      priority: "5"
+    };
+
+    var rows = this.state.rows.slice();
+    rows.push(newarticle);
+
+    this.setState({ rows });
+  };
 
   render() {
     return (
@@ -80,13 +111,35 @@ class MainContent extends Component {
             columns={this._columns}
             rowGetter={this.rowGetter}
             rowsCount={this.state.rows.length}
-            minHeight={500}
+            minHeight={400}
             onGridRowsUpdated={this.handleGridRowsUpdated}
+            onGridSort={this.handleGridSort}
+            onRowClick={this.handleRowClick}
+            // rowSelection={{
+            //   showCheckbox: false,
+            //   enableShiftSelect: true,
+            //   onRowsSelected: this.onRowsSelected,
+            //   onRowsDeselected: this.onRowsDeselected,
+            //   selectBy: {
+            //     indexes: this.state.selectedIndexes
+            //   }
+            // }}
           />
           {/* {this.state.articles.map((item, i) => <li key={i}>{item}</li>)} */}
-
           <Divider />
-          <Image src="https:react.semantic-ui.com/images/wireframe/paragraph.png" />
+
+          {/* TODO: */}
+          <div>
+            <h4>{this.state.selectedRow["name"]}</h4>
+            <div>
+              <span>Cantidad: </span>
+              <strong>{this.state.selectedRow["count"]}</strong>
+            </div>
+            <div>
+              <span>Prioridad: </span>
+              <strong>{this.state.selectedRow["priority"]}</strong>
+            </div>
+          </div>
         </Segment>
       </Sidebar.Pusher>
     );
