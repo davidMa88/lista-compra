@@ -1,14 +1,8 @@
 import React, { Component } from "react";
 import ReactDataGrid from "react-data-grid";
 import update from "immutability-helper";
-import {
-  Image,
-  Segment,
-  Sidebar,
-  Input,
-  Icon,
-  Divider
-} from "semantic-ui-react";
+import SelectedRowLayer from "./SelectedRowLayer";
+import { Segment, Sidebar, Input, Icon, Divider } from "semantic-ui-react";
 
 class MainContent extends Component {
   constructor(props, context) {
@@ -127,25 +121,7 @@ class MainContent extends Component {
           />
           {/* {this.state.articles.map((item, i) => <li key={i}>{item}</li>)} */}
           <Divider />
-
-          {/* TODO: */}
-          <div>
-            {this.state.selectedRow !== undefined ? (
-              <div>
-                <h4>{this.state.selectedRow["name"]}</h4>
-                <div>
-                  <span>Cantidad: </span>
-                  <strong>{this.state.selectedRow["count"]}</strong>
-                </div>
-                <div>
-                  <span>Prioridad: </span>
-                  <strong>{this.state.selectedRow["priority"]}</strong>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
+          <SelectedRowLayer selectedRow={this.state.selectedRow} />
         </Segment>
       </Sidebar.Pusher>
     );
