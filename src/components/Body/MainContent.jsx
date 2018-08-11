@@ -130,15 +130,21 @@ class MainContent extends Component {
 
           {/* TODO: */}
           <div>
-            <h4>{this.state.selectedRow["name"]}</h4>
-            <div>
-              <span>Cantidad: </span>
-              <strong>{this.state.selectedRow["count"]}</strong>
-            </div>
-            <div>
-              <span>Prioridad: </span>
-              <strong>{this.state.selectedRow["priority"]}</strong>
-            </div>
+            {this.state.selectedRow !== undefined ? (
+              <div>
+                <h4>{this.state.selectedRow["name"]}</h4>
+                <div>
+                  <span>Cantidad: </span>
+                  <strong>{this.state.selectedRow["count"]}</strong>
+                </div>
+                <div>
+                  <span>Prioridad: </span>
+                  <strong>{this.state.selectedRow["priority"]}</strong>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </Segment>
       </Sidebar.Pusher>
