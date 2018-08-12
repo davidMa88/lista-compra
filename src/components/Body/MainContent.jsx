@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDataGrid from "react-data-grid";
 import update from "immutability-helper";
-import SelectedRowLayer from "./SelectedRowLayer";
+import SelectedRowLayer from "../Pops/SelectedRowLayer";
 import { Segment, Sidebar, Input, Icon, Divider } from "semantic-ui-react";
 
 class MainContent extends Component {
@@ -79,7 +79,10 @@ class MainContent extends Component {
   addArticle = () => {
     var newarticle = {
       id: this.state.rows.length,
-      name: this.state.articleToAdd,
+      name:
+        this.state.articleToAdd !== ""
+          ? this.state.articleToAdd
+          : "Name-" + this.state.rows.length,
       count: "1",
       priority: "5"
     };
