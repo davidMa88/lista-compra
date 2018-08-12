@@ -20,6 +20,20 @@ class MainContent extends Component {
     };
   }
 
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  }
+
+  handleClickOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      alert("You clicked outside of me!");
+    }
+  }
+
   rowGetter = i => {
     return this.state.rows[i];
   };
@@ -71,10 +85,24 @@ class MainContent extends Component {
   //   });
   // };
 
+  handlePlusProp = prop => {
+    this.state.selectedRow[prop]++;
+    this.setState(this.state.selectedRow);
+  };
+
+  handleMinusProp = prop => {
+    this.state.selectedRow[prop]--;
+    this.setState(this.state.selectedRow);
+  };
+
   onChange = e =>
     this.setState({
       articleToAdd: e.target.value
     });
+
+  setWrapperRef = node => {
+    this.wrapperRef = node;
+  };
 
   addArticle = () => {
     var newarticle = {
@@ -112,6 +140,7 @@ class MainContent extends Component {
             onGridRowsUpdated={this.handleGridRowsUpdated}
             onGridSort={this.handleGridSort}
             onRowClick={this.handleRowClick}
+            ref={this.setWrapperRef}
             // rowSelection={{
             //   showCheckbox: false,
             //   enableShiftSelect: true,
@@ -124,7 +153,11 @@ class MainContent extends Component {
           />
           {/* {this.state.articles.map((item, i) => <li key={i}>{item}</li>)} */}
           <Divider />
-          <SelectedRowLayer selectedRow={this.state.selectedRow} />
+          <SelectedRowLayer
+            selectedRow={this.state.selectedRow}
+            plusProp={this.handlePlusProp}
+            minusProp={this.handleMinusProp}
+          />
         </Segment>
       </Sidebar.Pusher>
     );

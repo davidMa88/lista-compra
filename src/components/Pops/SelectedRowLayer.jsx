@@ -7,10 +7,6 @@ class SelectedRowLayer extends Component {
     this.state = {};
   }
 
-  onClick = row => {
-    console.log(row);
-  };
-
   render() {
     let layer = "";
 
@@ -25,12 +21,18 @@ class SelectedRowLayer extends Component {
             <PropButtons
               text="Cantidad"
               value="count"
+              rows={this.props.rows}
               selectedRow={this.props.selectedRow}
+              plusProp={this.props.plusProp}
+              minusProp={this.props.minusProp}
             />
             <PropButtons
               text="Prioridad"
               value="priority"
+              rows={this.props.rows}
               selectedRow={this.props.selectedRow}
+              plusProp={this.props.plusProp}
+              minusProp={this.props.minusProp}
             />
           </div>
         </div>
