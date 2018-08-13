@@ -1,89 +1,17 @@
 import React, { Component } from "react";
-import ReactDataGrid from "react-data-grid";
-import update from "immutability-helper";
-import SelectedRowLayer from "../Pops/SelectedRowLayer";
 import { Segment, Sidebar, Input, Icon, Divider } from "semantic-ui-react";
+import update from "immutability-helper";
+import Grid from "./Grid";
 
 class MainContent extends Component {
   constructor(props, context) {
     super(props, context);
-    this._columns = [
-      { key: "id", name: "Id", width: 80, sortable: true },
-      { key: "name", name: "Nombre", editable: true, sortable: true },
-      { key: "count", name: "Cantidad", editable: true, sortable: true },
-      { key: "priority", name: "Prioridad", editable: true, sortable: true }
-    ];
     this.state = {
       articleToAdd: "",
       selectedRow: [],
       rows: []
     };
   }
-
-  componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
-  }
-
-  handleClickOutside(event) {
-    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-      alert("You clicked outside of me!");
-    }
-  }
-
-  rowGetter = i => {
-    return this.state.rows[i];
-  };
-
-  handleGridRowsUpdated = ({ fromRow, toRow, updated }) => {
-    let rows = this.state.rows.slice();
-
-    for (let i = fromRow; i <= toRow; i++) {
-      let rowToUpdate = rows[i];
-      let updatedRow = update(rowToUpdate, { $merge: updated });
-      rows[i] = updatedRow;
-    }
-
-    this.setState({ rows });
-  };
-
-  handleGridSort = (sortColumn, sortDirection) => {
-    const comparer = (a, b) => {
-      if (sortDirection === "ASC") {
-        return a[sortColumn] > b[sortColumn] ? 1 : -1;
-      } else {
-        return a[sortColumn] < b[sortColumn] ? 1 : -1;
-      }
-    };
-
-    const rows = this.state.rows.sort(comparer);
-    this.setState({ rows });
-  };
-
-  handleRowClick = index => {
-    const selectedRow = this.rowGetter(index);
-    this.setState({ selectedRow });
-  };
-
-  // onRowsSelected = rows => {
-  //   this.setState({
-  //     selectedIndexes: this.state.selectedIndexes.concat(
-  //       rows.map(r => r.rowIdx)
-  //     )
-  //   });
-  // };
-
-  // onRowsDeselected = rows => {
-  //   let rowIndexes = rows.map(r => r.rowIdx);
-  //   this.setState({
-  //     selectedIndexes: this.state.selectedIndexes.filter(
-  //       i => rowIndexes.indexOf(i) === -1
-  //     )
-  //   });
-  // };
 
   handlePlusProp = prop => {
     this.state.selectedRow[prop]++;
@@ -99,10 +27,6 @@ class MainContent extends Component {
     this.setState({
       articleToAdd: e.target.value
     });
-
-  setWrapperRef = node => {
-    this.wrapperRef = node;
-  };
 
   addArticle = () => {
     var newarticle = {
@@ -121,6 +45,44 @@ class MainContent extends Component {
     this.setState({ rows });
   };
 
+  rowGetter = i => {
+    return this.state.rows[i];
+  };
+
+  handleGridSort = (sortColumn, sortDirection) => {
+    const comparer = (a, b) => {
+      if (sortDirection === "ASC") {
+        return a[sortColumn] > b[sortColumn] ? 1 : -1;
+      } else {
+        return a[sortColumn] < b[sortColumn] ? 1 : -1;
+      }
+    };
+
+    const rows = this.props.rows.sort(comparer);
+    this.setState({ rows });
+  };
+
+  handleGridRowsUpdated = ({ fromRow, toRow, updated }) => {
+    let rows = this.state.rows.slice();
+
+    for (let i = fromRow; i <= toRow; i++) {
+      let rowToUpdate = rows[i];
+      let updatedRow = update(rowToUpdate, { $merge: updated });
+      rows[i] = updatedRow;
+    }
+
+    this.setState({ rows });
+  };
+
+  handleRowClick = index => {
+    const selectedRow = this.rowGetter(index);
+    this.setState({ selectedRow });
+  };
+
+  deselectRow = () => {
+    this.setState({ selectedRow: [] });
+  };
+
   render() {
     return (
       <Sidebar.Pusher>
@@ -131,30 +93,15 @@ class MainContent extends Component {
             onChange={this.onChange}
           />
           <Divider />
-          <ReactDataGrid
-            enableCellSelect={true}
-            columns={this._columns}
-            rowGetter={this.rowGetter}
-            rowsCount={this.state.rows.length}
-            minHeight={400}
-            onGridRowsUpdated={this.handleGridRowsUpdated}
-            onGridSort={this.handleGridSort}
-            onRowClick={this.handleRowClick}
-            ref={this.setWrapperRef}
-            // rowSelection={{
-            //   showCheckbox: false,
-            //   enableShiftSelect: true,
-            //   onRowsSelected: this.onRowsSelected,
-            //   onRowsDeselected: this.onRowsDeselected,
-            //   selectBy: {
-            //     indexes: this.state.selectedIndexes
-            //   }
-            // }}
-          />
-          {/* {this.state.articles.map((item, i) => <li key={i}>{item}</li>)} */}
-          <Divider />
-          <SelectedRowLayer
+          <Grid
+            articleToAdd={this.state.articleToAdd}
             selectedRow={this.state.selectedRow}
+            rows={this.state.rows}
+            handleRowClick={this.handleRowClick}
+            handleGridRowsUpdated={this.handleGridRowsUpdated}
+            handleGridSort={this.handleGridSort}
+            rowGetter={this.rowGetter}
+            deselectRow={this.deselectRow}
             plusProp={this.handlePlusProp}
             minusProp={this.handleMinusProp}
           />
