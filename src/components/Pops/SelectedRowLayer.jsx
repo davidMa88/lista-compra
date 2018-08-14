@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropButtons from "./PropButtons";
+import { Button } from "../../../node_modules/semantic-ui-react";
 
 class SelectedRowLayer extends Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class SelectedRowLayer extends Component {
               plusProp={this.props.plusProp}
               minusProp={this.props.minusProp}
             />
+            <Button onClick={this.props.handleRowDelete}>Eliminar</Button>
           </div>
         </div>
       );

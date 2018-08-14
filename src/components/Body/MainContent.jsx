@@ -13,40 +13,19 @@ class MainContent extends Component {
     };
   }
 
-  handlePlusProp = prop => {
-    this.state.selectedRow[prop]++;
-    this.setState(this.state.selectedRow);
-  };
+  //---------------------------------------------------------------------------------//
+  //-----------------------------  GRID - events/funcs  -----------------------------//
+  //---------------------------------------------------------------------------------//
+  handleGridRowsUpdated = ({ fromRow, toRow, updated }) => {
+    let rows = this.state.rows.slice();
 
-  handleMinusProp = prop => {
-    this.state.selectedRow[prop]--;
-    this.setState(this.state.selectedRow);
-  };
-
-  onChange = e =>
-    this.setState({
-      articleToAdd: e.target.value
-    });
-
-  addArticle = () => {
-    var newarticle = {
-      id: this.state.rows.length,
-      name:
-        this.state.articleToAdd !== ""
-          ? this.state.articleToAdd
-          : "Name-" + this.state.rows.length,
-      count: "1",
-      priority: "5"
-    };
-
-    var rows = this.state.rows.slice();
-    rows.push(newarticle);
+    for (let i = fromRow; i <= toRow; i++) {
+      let rowToUpdate = rows[i];
+      let updatedRow = update(rowToUpdate, { $merge: updated });
+      rows[i] = updatedRow;
+    }
 
     this.setState({ rows });
-  };
-
-  rowGetter = i => {
-    return this.state.rows[i];
   };
 
   handleGridSort = (sortColumn, sortDirection) => {
@@ -62,26 +41,65 @@ class MainContent extends Component {
     this.setState({ rows });
   };
 
-  handleGridRowsUpdated = ({ fromRow, toRow, updated }) => {
-    let rows = this.state.rows.slice();
-
-    for (let i = fromRow; i <= toRow; i++) {
-      let rowToUpdate = rows[i];
-      let updatedRow = update(rowToUpdate, { $merge: updated });
-      rows[i] = updatedRow;
-    }
-
-    this.setState({ rows });
-  };
-
   handleRowClick = index => {
     const selectedRow = this.rowGetter(index);
     this.setState({ selectedRow });
   };
 
-  deselectRow = () => {
+  handleRowDelete = () => {
+    var rows = this.state.rows.slice();
+    var index = rows.findIndex(r => r.id == this.state.selectedRow.id);
+    rows.splice(index, 1);
+    this.setState({ rows });
+  };
+
+  handleRowDeselect = () => {
     this.setState({ selectedRow: [] });
   };
+
+  rowGetter = i => {
+    return this.state.rows[i];
+  };
+
+  plusProp = prop => {
+    this.state.selectedRow[prop]++;
+    this.setState(this.state.selectedRow);
+  };
+
+  minusProp = prop => {
+    this.state.selectedRow[prop]--;
+    this.setState(this.state.selectedRow);
+  };
+
+  //--------------------------------------------------------------------------------//
+  //----------------------------  INPUT - events/funcs  ----------------------------//
+  //--------------------------------------------------------------------------------//
+  onChange = e =>
+    this.setState({
+      articleToAdd: e.target.value
+    });
+
+  addArticle = () => {
+    var newarticle = {
+      id:
+        this.state.rows.length > 0
+          ? this.state.rows[this.state.rows.length - 1].id + 1
+          : 0,
+      name:
+        this.state.articleToAdd !== ""
+          ? this.state.articleToAdd
+          : "Name-" + this.state.rows.length,
+      count: "1",
+      priority: "5"
+    };
+
+    var rows = this.state.rows.slice();
+    rows.push(newarticle);
+
+    this.setState({ rows });
+  };
+
+  //--------------------------------------------------------------------------------//
 
   render() {
     return (
@@ -94,16 +112,15 @@ class MainContent extends Component {
           />
           <Divider />
           <Grid
-            articleToAdd={this.state.articleToAdd}
-            selectedRow={this.state.selectedRow}
-            rows={this.state.rows}
-            handleRowClick={this.handleRowClick}
+            {...this.state}
             handleGridRowsUpdated={this.handleGridRowsUpdated}
             handleGridSort={this.handleGridSort}
+            handleRowClick={this.handleRowClick}
+            handleRowDelete={this.handleRowDelete}
+            handleRowDeselect={this.handleRowDeselect}
             rowGetter={this.rowGetter}
-            deselectRow={this.deselectRow}
-            plusProp={this.handlePlusProp}
-            minusProp={this.handleMinusProp}
+            plusProp={this.plusProp}
+            minusProp={this.minusProp}
           />
         </Segment>
       </Sidebar.Pusher>

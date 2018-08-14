@@ -15,15 +15,11 @@ class Grid extends Component {
       { key: "priority", name: "Prioridad", editable: true, sortable: true }
     ];
 
-    this.state = {
-      articleToAdd: this.props.articleToAdd,
-      selectedRow: this.props.selectedRow,
-      rows: this.props.rows
-    };
+    this.state = {};
   }
 
   handleClickOutside = e => {
-    this.props.deselectRow();
+    this.props.handleRowDeselect();
   };
 
   render() {
@@ -38,21 +34,13 @@ class Grid extends Component {
           onGridRowsUpdated={this.props.handleGridRowsUpdated}
           onGridSort={this.props.handleGridSort}
           onRowClick={this.props.handleRowClick}
-          // rowSelection={{
-          //   showCheckbox: false,
-          //   enableShiftSelect: true,
-          //   onRowsSelected: this.onRowsSelected,
-          //   onRowsDeselected: this.onRowsDeselected,
-          //   selectBy: {
-          //     indexes: this.state.selectedIndexes
-          //   }
-          // }}
         />
         <Divider />
         <SelectedRowLayer
           selectedRow={this.props.selectedRow}
           plusProp={this.props.plusProp}
           minusProp={this.props.minusProp}
+          handleRowDelete={this.props.handleRowDelete}
         />
       </div>
     );
