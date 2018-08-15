@@ -48,9 +48,11 @@ class MainContent extends Component {
 
   handleRowDelete = () => {
     var rows = this.state.rows.slice();
-    var index = rows.findIndex(r => r.id == this.state.selectedRow.id);
+    var selected = this.state.selectedRow;
+    var index = rows.findIndex(r => r.id == selected.id);
     rows.splice(index, 1);
-    this.setState({ rows });
+    selected = [];
+    this.setState({ rows, selectedRow: selected });
   };
 
   handleRowDeselect = () => {
@@ -89,8 +91,8 @@ class MainContent extends Component {
         this.state.articleToAdd !== ""
           ? this.state.articleToAdd
           : "Name-" + this.state.rows.length,
-      count: "1",
-      priority: "5"
+      count: 1,
+      priority: 5
     };
 
     var rows = this.state.rows.slice();
