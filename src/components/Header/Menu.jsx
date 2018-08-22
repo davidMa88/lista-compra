@@ -13,10 +13,10 @@ class Menu extends Component {
 
   render() {
     return (
-      <div className="right floated four wide column">
+      <div className="col-xs-2">
         <Button
           icon="align justify"
-          style={{ fontSize: "2em" }}
+          style={{ fontSize: "2em", float: "right", margin: "0px" }}
           onClick={this.toggleSidebar}
         />
       </div>

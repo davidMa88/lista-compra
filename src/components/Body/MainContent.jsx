@@ -37,7 +37,7 @@ class MainContent extends Component {
       }
     };
 
-    const rows = this.props.rows.sort(comparer);
+    const rows = this.state.rows.sort(comparer);
     this.setState({ rows });
   };
 

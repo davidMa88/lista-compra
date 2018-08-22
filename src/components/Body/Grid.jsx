@@ -56,15 +56,18 @@ class Grid extends Component {
   handleRowClick = index => {
     this.setStyle(index, "green", "bold");
     this.setStyle(this.state.lastSelectedIndex, "black", "400");
-    this.state.lastSelectedIndex = index;
+    this.setState({ lastSelectedIndex: index });
     this.props.handleRowClick(index);
   };
 
   handleClickOutside = e => {
+    if (!this.props.selectedRow) return false;
+
     var index = this.props.rows.findIndex(
       r => r.id == this.props.selectedRow.id
     );
     this.setStyle(index, "black", "400");
+    this.setState({ lastSelectedIndex: "" });
     this.props.handleRowDeselect();
   };
 

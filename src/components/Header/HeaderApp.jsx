@@ -5,7 +5,7 @@ import Menu from "./Menu";
 class HeaderApp extends Component {
   render() {
     return (
-      <div className="ui one column grid">
+      <div className="row">
         <Title />
         <Menu sidebar={this.props.sidebar} />
       </div>
