@@ -1,0 +1,21 @@
+/* color: #00b5ad */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.title-header {
+  margin: auto 0;
+  padding: 0 5%;
+}
+
+.btn-menu-header {
+  font-size: 2em !important;
+  float: right !important;
+  margin: 0px !important;
+  cursor: pointer !important;
+  position: relative;
+  left: 38%;
+}

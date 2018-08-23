@@ -15,8 +15,9 @@ class Menu extends Component {
     return (
       <div className="col-xs-2">
         <Button
+          color="teal"
+          className="btn-menu-header"
           icon="align justify"
-          style={{ fontSize: "2em", float: "right", margin: "0px" }}
           onClick={this.toggleSidebar}
         />
       </div>

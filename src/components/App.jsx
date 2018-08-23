@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import BodyApp from "./Body/BodyApp";
 import HeaderApp from "./Header/HeaderApp";
+import FooterApp from "./Footer/FooterApp";
 
 class App extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class App extends Component {
       <React.Fragment>
         <HeaderApp sidebar={this.enableSidebar.bind(this)} />
         <BodyApp sidebarToggle={this.state.sidebar} />
+        <FooterApp />
       </React.Fragment>
     );
   }
