@@ -1,7 +1,8 @@
 {
   "name": "lista-compra",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "proxy": "http://localhost:5000/",
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "immutability-helper": "^2.7.1",
@@ -14,12 +15,19 @@
     "react-onclickoutside": "^6.7.1",
     "react-scripts": "1.1.4",
     "reactstrap": "^6.4.0",
-    "semantic-ui-react": "^0.82.3"
+    "semantic-ui-react": "^0.82.3",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "client": "yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   }
 }
