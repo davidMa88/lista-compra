@@ -7,6 +7,7 @@ class BodyApp extends Component {
   render() {
     return (
       <Sidebar.Pushable
+        as={Segment}
         style={{ marginTop: "0px", backgroundColor: "#00b5ad" }}
       >
         <SideBar sidebarToggle={this.props.sidebarToggle} />
